@@ -3,3 +3,23 @@ CREATE TABLE customers (
     first_name VARCHAR(25) NOT NULL,
     last_name VARCHAR(25) NOT NULL
 );
+
+CREATE TABLE bikes (
+	code TEXT PRIMARY KEY,
+    model TEXT NOT NULL,
+	cost NUMERIC(8,2) NOT NULL
+);
+
+CREATE TABLE orders (
+	id SERIAL PRIMARY KEY,
+	time_of_order TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+	customer_id INT NOT NULL REFERENCES customers
+);
+
+CREATE TABLE order_models (
+	id SERIAL PRIMARY KEY,
+	order_id INT NOT NULL REFERENCES orders,
+	model_code TEXT NOT NULL REFERENCES bikes,
+	total_cost NUMERIC(8,2) NOT NULL,
+	notes TEXT NOT NULL DEFAULT ‘’
+);
